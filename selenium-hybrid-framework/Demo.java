@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Demo program to showcase the World-Class Hybrid UI + REST API Automation Framework
+ * Demo program to showcase the Hybrid UI + REST API Automation Framework
  */
 public class Demo {
     
