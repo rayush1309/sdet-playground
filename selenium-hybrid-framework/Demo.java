@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class Demo {
     
     public static void main(String[] args) {
-        System.out.println("🚀 WORLD-CLASS HYBRID UI + REST API AUTOMATION FRAMEWORK DEMO");
+        System.out.println(" HYBRID UI + REST API AUTOMATION FRAMEWORK DEMO");
         System.out.println("=".repeat(80));
         
         // Show framework structure
