@@ -1,6 +1,6 @@
 # 🚀 Selenium Hybrid Framework
 
-## 🎯 **World-Class UI + REST API Automation Framework**
+## 🎯 **UI + REST API Automation Framework**
 
 A comprehensive, enterprise-grade automation framework that combines **Selenium WebDriver** for UI testing and **RestAssured** for API testing, designed for scalable, maintainable, and robust test automation.
 
