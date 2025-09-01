@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+    
+    <!-- Properties for log file paths -->
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_FILE_PATH">target/logs</Property>
+        <Property name="ARCHIVE_FILE_PATH">target/logs/archive</Property>
+    </Properties>
+    
+    <!-- Console Appender -->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        
+        <!-- File Appender for all logs -->
+        <RollingFile name="FileAppender" 
+                     fileName="${LOG_FILE_PATH}/automation.log"
+                     filePattern="${ARCHIVE_FILE_PATH}/automation-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <!-- File Appender for Selenium logs -->
+        <RollingFile name="SeleniumFileAppender" 
+                     fileName="${LOG_FILE_PATH}/selenium.log"
+                     filePattern="${ARCHIVE_FILE_PATH}/selenium-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <!-- File Appender for API logs -->
+        <RollingFile name="APIFileAppender" 
+                     fileName="${LOG_FILE_PATH}/api.log"
+                     filePattern="${ARCHIVE_FILE_PATH}/api-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <!-- File Appender for performance logs -->
+        <RollingFile name="PerformanceFileAppender" 
+                     fileName="${LOG_FILE_PATH}/performance.log"
+                     filePattern="${ARCHIVE_FILE_PATH}/performance-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <!-- File Appender for error logs -->
+        <RollingFile name="ErrorFileAppender" 
+                     fileName="${LOG_FILE_PATH}/error.log"
+                     filePattern="${ARCHIVE_FILE_PATH}/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <!-- Async Appender for better performance -->
+        <Async name="AsyncFileAppender">
+            <AppenderRef ref="FileAppender"/>
+        </Async>
+        
+        <Async name="AsyncSeleniumAppender">
+            <AppenderRef ref="SeleniumFileAppender"/>
+        </Async>
+        
+        <Async name="AsyncAPIAppender">
+            <AppenderRef ref="APIFileAppender"/>
+        </Async>
+        
+        <Async name="AsyncPerformanceAppender">
+            <AppenderRef ref="PerformanceFileAppender"/>
+        </Async>
+        
+        <Async name="AsyncErrorAppender">
+            <AppenderRef ref="ErrorFileAppender"/>
+        </Async>
+    </Appenders>
+    
+    <!-- Loggers Configuration -->
+    <Loggers>
+        <!-- Root Logger -->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Root>
+        
+        <!-- Selenium WebDriver Logger -->
+        <Logger name="org.openqa.selenium" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncSeleniumAppender"/>
+        </Logger>
+        
+        <!-- WebDriver Manager Logger -->
+        <Logger name="io.github.bonigarcia" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncSeleniumAppender"/>
+        </Logger>
+        
+        <!-- RestAssured Logger -->
+        <Logger name="io.restassured" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncAPIAppender"/>
+        </Logger>
+        
+        <!-- Framework Loggers -->
+        <Logger name="com.automation" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Configuration Logger -->
+        <Logger name="com.automation.config" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- WebDriver Logger -->
+        <Logger name="com.automation.core" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncSeleniumAppender"/>
+        </Logger>
+        
+        <!-- API Logger -->
+        <Logger name="com.automation.api" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncAPIAppender"/>
+        </Logger>
+        
+        <!-- Reporting Logger -->
+        <Logger name="com.automation.reporting" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Utils Logger -->
+        <Logger name="com.automation.utils" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- TestNG Logger -->
+        <Logger name="org.testng" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Maven Logger -->
+        <Logger name="org.apache.maven" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Performance Logger -->
+        <Logger name="com.automation.performance" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncPerformanceAppender"/>
+        </Logger>
+        
+        <!-- Database Logger -->
+        <Logger name="com.automation.database" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Security Logger -->
+        <Logger name="com.automation.security" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Error Logger - captures all errors -->
+        <Logger name="ERROR" level="ERROR" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncErrorAppender"/>
+        </Logger>
+        
+        <!-- HTTP Client Logger -->
+        <Logger name="org.apache.http" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncAPIAppender"/>
+        </Logger>
+        
+        <!-- JSON Logger -->
+        <Logger name="com.fasterxml.jackson" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Excel Logger -->
+        <Logger name="org.apache.poi" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Allure Logger -->
+        <Logger name="io.qameta.allure" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Extent Reports Logger -->
+        <Logger name="com.aventstack" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Cucumber Logger (if using BDD) -->
+        <Logger name="io.cucumber" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Appium Logger (if using mobile testing) -->
+        <Logger name="io.appium" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- JMeter Logger (if using performance testing) -->
+        <Logger name="org.apache.jmeter" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncPerformanceAppender"/>
+        </Logger>
+        
+        <!-- WireMock Logger (if using API mocking) -->
+        <Logger name="com.github.tomakehurst.wiremock" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncAPIAppender"/>
+        </Logger>
+        
+        <!-- Test Containers Logger (if using database testing) -->
+        <Logger name="org.testcontainers" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- MySQL Logger -->
+        <Logger name="com.mysql" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- HikariCP Logger (connection pool) -->
+        <Logger name="com.zaxxer.hikari" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Spring Logger (if using Spring framework) -->
+        <Logger name="org.springframework" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- JUnit Logger -->
+        <Logger name="junit" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Apache Commons Logger -->
+        <Logger name="org.apache.commons" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Gson Logger (if using Gson) -->
+        <Logger name="com.google.gson" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- OkHttp Logger (if using OkHttp) -->
+        <Logger name="okhttp3" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncAPIAppender"/>
+        </Logger>
+        
+        <!-- Netty Logger (if using Netty) -->
+        <Logger name="io.netty" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- SLF4J Logger -->
+        <Logger name="org.slf4j" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- Logback Logger -->
+        <Logger name="ch.qos.logback" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- JUL Logger (Java Util Logging) -->
+        <Logger name="java.util.logging" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+        <!-- JCL Logger (Jakarta Commons Logging) -->
+        <Logger name="org.apache.commons.logging" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncFileAppender"/>
+        </Logger>
+        
+    </Loggers>
+    
+</Configuration>

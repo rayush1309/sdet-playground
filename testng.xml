@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Hybrid Automation Framework Test Suite" parallel="methods" thread-count="3">
+    
+    <test name="UI Tests" preserve-order="false">
+        <classes>
+            <class name="com.automation.tests.GoogleSearchUITest">
+                <methods>
+                    <include name="testGoogleSearch"/>
+                    <include name="testGoogleSearchSuggestions"/>
+                    <include name="testGoogleSearchWithSpecialCharacters"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <test name="API Tests" preserve-order="false">
+        <classes>
+            <class name="com.automation.tests.RESTAPITest">
+                <methods>
+                    <include name="testGetAllPosts"/>
+                    <include name="testGetPostById"/>
+                    <include name="testCreatePost"/>
+                    <include name="testUpdatePost"/>
+                    <include name="testDeletePost"/>
+                    <include name="testGetPostsWithQueryParams"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <test name="Hybrid Tests" preserve-order="false">
+        <classes>
+            <class name="com.automation.tests.HybridUITest">
+                <methods>
+                    <include name="testHybridGoogleSearch"/>
+                    <include name="testHybridFormSubmission"/>
+                    <include name="testHybridPerformanceValidation"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- Test Groups Configuration -->
+    <groups>
+        <run>
+            <!-- Test Categories -->
+            <include name="smoke"/>
+            <include name="regression"/>
+            <include name="ui"/>
+            <include name="api"/>
+            <include name="hybrid"/>
+            
+            <!-- Test Types -->
+            <include name="functional"/>
+            <include name="performance"/>
+            <include name="security"/>
+        </run>
+        
+        <!-- Group Definitions -->
+        <define name="smoke">
+            <include name="smoke"/>
+        </define>
+        
+        <define name="regression">
+            <include name="regression"/>
+        </define>
+        
+        <define name="ui">
+            <include name="ui"/>
+        </define>
+        
+        <define name="api">
+            <include name="api"/>
+        </define>
+        
+        <define name="hybrid">
+            <include name="hybrid"/>
+        </define>
+    </groups>
+    
+    <!-- Test Parameters -->
+    <parameter name="browser" value="chrome"/>
+    <parameter name="headless" value="false"/>
+    <parameter name="implicit.wait" value="10"/>
+    <parameter name="explicit.wait" value="20"/>
+    <parameter name="base.url" value="https://www.google.com"/>
+    <parameter name="api.base.url" value="https://jsonplaceholder.typicode.com"/>
+    
+    <!-- Listeners -->
+    <listeners>
+        <listener class-name="com.automation.listeners.TestListener"/>
+        <listener class-name="com.automation.listeners.RetryListener"/>
+        <listener class-name="com.automation.listeners.ExecutionListener"/>
+    </listeners>
+    
+    <!-- Test Execution Configuration -->
+    <suite-files>
+        <!-- Additional suite files can be included here -->
+    </suite-files>
+    
+    <!-- Parallel Execution Configuration -->
+    <suite name="Parallel Execution Suite" parallel="methods" thread-count="3">
+        <test name="Parallel UI Tests" parallel="methods" thread-count="2">
+            <classes>
+                <class name="com.automation.tests.GoogleSearchUITest"/>
+            </classes>
+        </test>
+        
+        <test name="Parallel API Tests" parallel="methods" thread-count="2">
+            <classes>
+                <class name="com.automation.tests.RESTAPITest"/>
+            </classes>
+        </test>
+    </suite>
+    
+    <!-- Data Provider Configuration -->
+    <test name="Data Driven Tests">
+        <parameter name="dataProviderClass" value="com.automation.dataproviders.TestDataProvider"/>
+        <parameter name="dataProviderMethod" value="getTestData"/>
+        <classes>
+            <class name="com.automation.tests.DataDrivenTest"/>
+        </classes>
+    </test>
+    
+    <!-- Performance Test Configuration -->
+    <test name="Performance Tests">
+        <parameter name="performance.mode" value="true"/>
+        <parameter name="load.test.duration" value="300"/>
+        <parameter name="load.test.users" value="10"/>
+        <classes>
+            <class name="com.automation.tests.PerformanceTest"/>
+        </classes>
+    </test>
+    
+    <!-- Mobile Test Configuration -->
+    <test name="Mobile Tests">
+        <parameter name="mobile.platform" value="ios"/>
+        <parameter name="mobile.device" value="iPhone 12"/>
+        <classes>
+            <class name="com.automation.tests.MobileTest"/>
+        </classes>
+    </test>
+    
+    <!-- Database Test Configuration -->
+    <test name="Database Tests">
+        <parameter name="database.enabled" value="true"/>
+        <parameter name="database.cleanup" value="true"/>
+        <classes>
+            <class name="com.automation.tests.DatabaseTest"/>
+        </classes>
+    </test>
+    
+    <!-- Security Test Configuration -->
+    <test name="Security Tests">
+        <parameter name="security.enabled" value="true"/>
+        <parameter name="vulnerability.scan" value="true"/>
+        <classes>
+            <class name="com.automation.tests.SecurityTest"/>
+        </classes>
+    </test>
+    
+    <!-- Cross Browser Test Configuration -->
+    <test name="Cross Browser Tests">
+        <parameter name="browsers" value="chrome,firefox,edge"/>
+        <classes>
+            <class name="com.automation.tests.CrossBrowserTest"/>
+        </classes>
+    </test>
+    
+    <!-- Environment Specific Tests -->
+    <test name="Environment Tests">
+        <parameter name="environment" value="qa"/>
+        <parameter name="config.file" value="application-qa.properties"/>
+        <classes>
+            <class name="com.automation.tests.EnvironmentTest"/>
+        </classes>
+    </test>
+    
+    <!-- Reporting Configuration -->
+    <test name="Reporting Tests">
+        <parameter name="extent.report" value="true"/>
+        <parameter name="allure.report" value="true"/>
+        <parameter name="html.report" value="true"/>
+        <classes>
+            <class name="com.automation.tests.ReportingTest"/>
+        </classes>
+    </test>
+    
+</suite>

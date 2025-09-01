@@ -1,0 +1,294 @@
+# Framework Configuration for Hybrid Automation Framework
+
+ui:
+  supportedBrowsers:
+    - chrome
+    - firefox
+    - edge
+    - safari
+  
+  browserOptions:
+    chrome:
+      --no-sandbox: ""
+      --disable-dev-shm-usage: ""
+      --disable-gpu: ""
+      --disable-extensions: ""
+      --disable-infobars: ""
+      --start-maximized: ""
+      --disable-blink-features: "AutomationControlled"
+    
+    firefox:
+      --no-sandbox: ""
+      --disable-dev-shm-usage: ""
+      --start-maximized: ""
+    
+    edge:
+      --no-sandbox: ""
+      --disable-dev-shm-usage: ""
+      --start-maximized: ""
+  
+  defaultTimeout: 30
+  takeScreenshots: true
+  screenshotFormat: "PNG"
+  
+  # Page Object Model Configuration
+  pageObject:
+    enabled: true
+    basePackage: "com.automation.pages"
+    elementTimeout: 10
+    pageLoadTimeout: 30
+
+api:
+  connectionTimeout: 10000
+  readTimeout: 30000
+  enableLogging: true
+  defaultContentType: "application/json"
+  
+  defaultHeaders:
+    User-Agent: "Hybrid-Automation-Framework/1.0"
+    Accept: "application/json"
+    Content-Type: "application/json"
+  
+  # Authentication Configuration
+  authentication:
+    type: "bearer"  # bearer, basic, oauth2, api-key
+    tokenExpiry: 3600
+    refreshToken: true
+  
+  # Rate Limiting
+  rateLimit:
+    enabled: false
+    requestsPerMinute: 60
+    burstLimit: 10
+  
+  # Mock Configuration
+  mock:
+    enabled: false
+    wiremock:
+      port: 8080
+      directory: "src/test/resources/mocks"
+
+reporting:
+  reportType: "all"  # all, extent, allure, html
+  generateHtmlReport: true
+  generateAllureReport: true
+  generateExtentReport: true
+  reportPath: "target/reports"
+  
+  # Extent Reports Configuration
+  extent:
+    theme: "dark"
+    documentTitle: "Hybrid Automation Framework - Test Report"
+    reportName: "Test Execution Report"
+    timeStampFormat: "dd/MM/yyyy hh:mm:ss"
+  
+  # Allure Configuration
+  allure:
+    resultsDirectory: "target/allure-results"
+    reportDirectory: "target/allure-report"
+    categoriesFile: "src/test/resources/allure/categories.json"
+    environmentFile: "src/test/resources/allure/environment.properties"
+  
+  # Email Reporting
+  email:
+    enabled: false
+    smtp:
+      host: "smtp.gmail.com"
+      port: 587
+      username: ""
+      password: ""
+    recipients: []
+    subject: "Automation Test Report"
+    attachReports: true
+
+database:
+  url: "jdbc:mysql://localhost:3306/testdb"
+  username: "testuser"
+  password: "testpass"
+  driver: "com.mysql.cj.jdbc.Driver"
+  maxConnections: 10
+  
+  # Connection Pool Configuration
+  connectionPool:
+    initialSize: 5
+    maxActive: 20
+    maxIdle: 10
+    minIdle: 5
+    maxWait: 30000
+  
+  # Test Data Management
+  testData:
+    cleanupAfterTest: true
+    backupBeforeTest: false
+    restoreAfterTest: true
+
+performance:
+  threadCount: 10
+  rampUpPeriod: 60
+  enableJMeter: false
+  jmeterPath: ""
+  
+  # Load Testing Configuration
+  loadTest:
+    enabled: false
+    duration: 300
+    rampUp: 60
+    holdTime: 180
+    rampDown: 60
+  
+  # Performance Thresholds
+  thresholds:
+    ui:
+      pageLoadTime: 10000
+      elementWaitTime: 5000
+    api:
+      responseTime: 5000
+      throughput: 100
+
+# Test Execution Configuration
+execution:
+  parallel: true
+  threadCount: 3
+  retryCount: 1
+  timeout: 300
+  
+  # Test Categories
+  categories:
+    smoke: true
+    regression: true
+    api: true
+    ui: true
+    hybrid: true
+  
+  # Test Prioritization
+  priority:
+    high: 1
+    medium: 2
+    low: 3
+
+# Data Management
+data:
+  testDataFile: "src/test/resources/testdata/testdata.xlsx"
+  testDataSheet: "TestData"
+  
+  # Data Providers
+  dataProviders:
+    excel: true
+    json: true
+    csv: true
+    database: true
+  
+  # Test Data Cleanup
+  cleanup:
+    enabled: true
+    afterTest: true
+    afterSuite: true
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file: "target/logs/automation.log"
+  maxFileSize: "10MB"
+  maxBackupIndex: 5
+  
+  # Log Categories
+  categories:
+    selenium: "INFO"
+    api: "INFO"
+    database: "INFO"
+    performance: "INFO"
+    reporting: "INFO"
+
+# Mobile Testing Configuration
+mobile:
+  enabled: false
+  platform: "ios"  # ios, android
+  
+  # iOS Configuration
+  ios:
+    deviceName: "iPhone 12"
+    platformVersion: "15.0"
+    automationName: "XCUITest"
+    udid: ""
+  
+  # Android Configuration
+  android:
+    deviceName: "Pixel 5"
+    platformVersion: "11.0"
+    automationName: "UiAutomator2"
+    udid: ""
+  
+  # Appium Configuration
+  appium:
+    host: "localhost"
+    port: 4723
+    path: "/wd/hub"
+
+# Cloud Testing Configuration
+cloud:
+  provider: "none"  # saucelabs, browserstack, lambdatest, none
+  
+  # Sauce Labs Configuration
+  saucelabs:
+    username: ""
+    accessKey: ""
+    region: "us-west-1"
+    dataCenter: "US"
+  
+  # BrowserStack Configuration
+  browserstack:
+    username: ""
+    accessKey: ""
+    local: false
+    debug: false
+  
+  # LambdaTest Configuration
+  lambdatest:
+    username: ""
+    accessKey: ""
+    tunnel: false
+    visual: false
+
+# Security Configuration
+security:
+  # API Security
+  api:
+    sslVerification: true
+    certificateValidation: true
+    proxy:
+      enabled: false
+      host: ""
+      port: 0
+      username: ""
+      password: ""
+  
+  # Test Data Security
+  testData:
+    encryption: false
+    maskSensitiveData: true
+    sensitiveFields:
+      - "password"
+      - "ssn"
+      - "creditCard"
+      - "email"
+
+# Integration Configuration
+integration:
+  # CI/CD Integration
+  ci:
+    jenkins: false
+    gitlab: false
+    github: false
+    azure: false
+  
+  # Test Management Tools
+  testManagement:
+    jira: false
+    testrail: false
+    qtest: false
+  
+  # Monitoring Tools
+  monitoring:
+    newrelic: false
+    datadog: false
+    prometheus: false
