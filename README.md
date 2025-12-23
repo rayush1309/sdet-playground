@@ -1,4 +1,4 @@
-=# Hi there, I'm Ayush Raj 👋
+=# Hi there, I'm Ayush 👋
 
 ## 🚀 About Me
 I'm a Software Development Engineer in Test (SDET) with 4.5+ years of experience in quality assurance and test automation. I focus on scalable automation frameworks, AI-assisted testing solutions, and reliable quality validation for enterprise applications.
